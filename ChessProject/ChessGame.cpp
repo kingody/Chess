@@ -14,6 +14,10 @@ void ChessGame::PlayChess()
     Color turn = WHITE;
     string oldpos = "something", newpos = "else";
     bool Check = false;
+    if (true)
+    {
+        //something
+    }
 
     while (true)
     {
