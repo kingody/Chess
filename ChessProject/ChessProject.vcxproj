@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Headers</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Headers</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -114,7 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Headers</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -130,7 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Headers</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -138,16 +138,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Bishop.cpp" />
-    <ClCompile Include="src\ChessGame.cpp" />
-    <ClCompile Include="src\Field.cpp" />
-    <ClCompile Include="src\King.cpp" />
-    <ClCompile Include="src\Knight.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Pawn.cpp" />
-    <ClCompile Include="src\Piece.cpp" />
-    <ClCompile Include="src\Queen.cpp" />
-    <ClCompile Include="src\Rook.cpp" />
+    <ClCompile Include="Source\Bishop.cpp" />
+    <ClCompile Include="Source\ChessGame.cpp" />
+    <ClCompile Include="Source\Field.cpp" />
+    <ClCompile Include="Source\King.cpp" />
+    <ClCompile Include="Source\Knight.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Pawn.cpp" />
+    <ClCompile Include="Source\Piece.cpp" />
+    <ClCompile Include="Source\Queen.cpp" />
+    <ClCompile Include="Source\Rook.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Bishop.h" />

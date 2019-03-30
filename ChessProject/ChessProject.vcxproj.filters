@@ -15,34 +15,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Bishop.cpp">
+    <ClCompile Include="Source\Bishop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ChessGame.cpp">
+    <ClCompile Include="Source\ChessGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Field.cpp">
+    <ClCompile Include="Source\Field.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\King.cpp">
+    <ClCompile Include="Source\King.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Knight.cpp">
+    <ClCompile Include="Source\Knight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp">
+    <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Pawn.cpp">
+    <ClCompile Include="Source\Pawn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Piece.cpp">
+    <ClCompile Include="Source\Piece.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Queen.cpp">
+    <ClCompile Include="Source\Queen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rook.cpp">
+    <ClCompile Include="Source\Rook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
