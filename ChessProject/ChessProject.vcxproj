@@ -92,6 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)Headers</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -101,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)Headers</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -112,6 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)Headers</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -127,6 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)Headers</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -134,29 +138,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bishop.cpp" />
-    <ClCompile Include="ChessGame.cpp" />
-    <ClCompile Include="Field.cpp" />
-    <ClCompile Include="King.cpp" />
-    <ClCompile Include="Knight.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Pawn.cpp" />
-    <ClCompile Include="Piece.cpp" />
-    <ClCompile Include="Queen.cpp" />
-    <ClCompile Include="Rook.cpp" />
+    <ClCompile Include="src\Bishop.cpp" />
+    <ClCompile Include="src\ChessGame.cpp" />
+    <ClCompile Include="src\Field.cpp" />
+    <ClCompile Include="src\King.cpp" />
+    <ClCompile Include="src\Knight.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Pawn.cpp" />
+    <ClCompile Include="src\Piece.cpp" />
+    <ClCompile Include="src\Queen.cpp" />
+    <ClCompile Include="src\Rook.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bishop.h" />
-    <ClInclude Include="Chess.h" />
-    <ClInclude Include="ChessGame.h" />
-    <ClInclude Include="Field.h" />
-    <ClInclude Include="King.h" />
-    <ClInclude Include="Knight.h" />
-    <ClInclude Include="Pawn.h" />
-    <ClInclude Include="Piece.h" />
-    <ClInclude Include="Queen.h" />
-    <ClInclude Include="Rook.h" />
-    <ClInclude Include="Troops.h" />
+    <ClInclude Include="Headers\Bishop.h" />
+    <ClInclude Include="Headers\Chess.h" />
+    <ClInclude Include="Headers\ChessGame.h" />
+    <ClInclude Include="Headers\Field.h" />
+    <ClInclude Include="Headers\King.h" />
+    <ClInclude Include="Headers\Knight.h" />
+    <ClInclude Include="Headers\Pawn.h" />
+    <ClInclude Include="Headers\Piece.h" />
+    <ClInclude Include="Headers\Queen.h" />
+    <ClInclude Include="Headers\Rook.h" />
+    <ClInclude Include="Headers\Troops.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
