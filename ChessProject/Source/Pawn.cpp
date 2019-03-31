@@ -20,7 +20,7 @@ bool Pawn::IsValidMove(char newrow, char newcol)
     char drow = newrow - row, dcol = newcol - column;
 
     bool IsSingleStep = !dcol && (drow == direction);
-    bool IsDoubleStep = (row == color ? 1 : 6) && (drow == 2 * direction);
+    bool IsDoubleStep = (row == (color ? 1 : 6)) && (drow == 2 * direction);
 
     return IsSingleStep || IsCapture(drow, dcol) || IsDoubleStep;
 }
