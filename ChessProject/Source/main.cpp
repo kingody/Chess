@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include "Chess.h"
+#include <fstream>
 
 using namespace std;
 
@@ -9,6 +10,6 @@ int main()
 
     Chess.PlayChess();
 
-
+    system("pause");
     return 0;
 }

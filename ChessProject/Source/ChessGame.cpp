@@ -1,10 +1,13 @@
 ﻿#include "ChessGame.h"
 #include <string>
+#include <fstream>
 
 ChessGame::ChessGame()
 {
     Names[0] = "Black";
     Names[1] = "White";
+
+    Board = NULL;
 }
 
 void ChessGame::PlayChess()
@@ -78,4 +81,40 @@ void ChessGame::ShowHelp()
     cout << "\t-Requirements: Both pieces have never moved before, the squares between them are empty,\n\t and the King is not in check for every square till his final destination" << endl << endl;
 
     system("pause");
-}    
+}
+
+void ChessGame::SaveGame()
+{
+    fstream file;
+    string filename;
+    char index = 0;
+    
+    do
+    {
+        file.close();
+
+        filename = "Saves/savefile" + to_string(index++) + ".txt";
+
+        file.open(filename, ios::in);     
+    } 
+    while (file.is_open());
+
+    file.open(filename, ios::out);
+
+    for (char i = 0; i < 8; i++)
+    {
+        for (char j = 0; j < 8; j++)
+        {
+            if ((*Board)[i][j])
+                file << (*Board)[i][j]->GetId() << (*Board)[i][j]->GetColor();
+            
+            else
+                file << "--";
+        }
+        file << endl;
+    }
+
+    file.close();
+    cout << "File saved";
+    system("pause");
+}

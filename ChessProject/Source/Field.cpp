@@ -16,7 +16,7 @@ Field::Field()
         Pieces[1][i] = new Pawn(1, i, BLACK);
         Pieces[6][i] = new Pawn(6, i, WHITE);
 
-        Pieces[4][i] = new Pawn(4, i, BLACK); //DEBUG
+        //Pieces[4][i] = new Pawn(4, i, BLACK); //DEBUG
     }
     //Rest of the pieces
     for (char i = 0; i < 8; i += 7 )
@@ -176,7 +176,6 @@ bool Field::IsCheck(Color color)
                 system("pause");
                 return true;
             }
-
 
     return false;
 }

@@ -10,6 +10,7 @@ class ChessGame
 
         void ShowHelp();
 
+        void SaveGame();
 
     private:
         std::string Names[2];
