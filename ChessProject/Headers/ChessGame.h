@@ -13,6 +13,8 @@ class ChessGame
         void ShowHelp();
 
         void SaveGame(Color);
+        void SaveGame(Color, string);
+        void SaveToFile(Color, fstream&);
 
         bool Import(string, Color&);
 

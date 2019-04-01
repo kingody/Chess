@@ -26,6 +26,7 @@ bool ChessGame::Command(Color &turn, string command)
             if (!Board->Castle(turn, direction))
             {       
                 cout << "You can't do that." << endl;
+                system("pause");
                 return false;
             }
             else
@@ -43,7 +44,15 @@ bool ChessGame::Command(Color &turn, string command)
         SaveGame(turn);
         return true;
     }
-    else if (command == "IMPORT" || command == "import")
+    else if (command == "SAVEAS" || command == "saveas")
+    {
+        string filename;
+        cin >> filename;
+
+        SaveGame(turn, filename);
+        return true;
+    }
+    else if (command == "OPEN" || command == "open")
     {
         string filename;
         cin >> filename;
@@ -127,23 +136,56 @@ void ChessGame::ShowHelp()
     system("pause");
 }
 
-void ChessGame::SaveGame(Color CurrentPlayer)
+void ChessGame::SaveGame(Color currentPlayer)
 {
     fstream file;
     string filename;
-    char id, index = 0;
+    char index = 0;
     
     do
     {
         file.close();
 
-        filename = "Saves/savefile" + to_string(index++) + ".txt";
+        filename = "Saves/savefile" + to_string(index++) + ".chs";
 
         file.open(filename, ios::in);     
     } 
     while (file.is_open());
 
     file.open(filename, ios::out);
+
+    SaveToFile(currentPlayer, file);
+
+    system("pause");
+}
+
+void ChessGame::SaveGame(Color currentPlayer, string filename)
+{
+    fstream file;
+
+    filename = "Saves/" + filename + ".chs";
+
+    file.open(filename, ios::in);
+
+    if (!file.is_open())
+    {
+        file.open(filename, ios::out);
+
+        if (!file.is_open())
+            cout << "Error while creating file." << endl;
+
+        else
+            SaveToFile(currentPlayer, file);
+    }
+    else
+        cout << "This file already exists." << endl;
+
+    system("pause");
+}
+
+void ChessGame::SaveToFile(Color currentPlayer,fstream &file)
+{
+    char id;
 
     for (char i = 0; i < 8; i++)
     {
@@ -156,17 +198,16 @@ void ChessGame::SaveGame(Color CurrentPlayer)
                 else
                     id = (*Board)[i][j]->GetId();
                 file << id;
-            }   
+            }
             else
                 file << '-';
         }
         file << endl;
     }
-    file << CurrentPlayer;
-    
+    file << currentPlayer;
+
     file.close();
     cout << "File saved" << endl;
-    system("pause");
 }
 
 bool ChessGame::Import(string filename, Color &turn)
@@ -174,7 +215,7 @@ bool ChessGame::Import(string filename, Color &turn)
     fstream file;
     int color;
 
-    filename = "Saves/" + filename;
+    filename = "Saves/" + filename + ".chs";
 
     file.open(filename, ios::in);
 
