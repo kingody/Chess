@@ -7,8 +7,6 @@ Knight::Knight(char r, char c, Color color):Piece(r, c, color)
     id = 'H';
 }
 
-Knight::Knight(const Knight &old):Piece(old) {}
-
 Piece* Knight::CreateCopy()
 {
     return new Knight(*this);

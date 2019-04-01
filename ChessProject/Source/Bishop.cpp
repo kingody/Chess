@@ -7,8 +7,6 @@ Bishop::Bishop(char r, char c, Color color):Piece(r, c, color)
     id = 'B';
 }
 
-Bishop::Bishop(const Bishop &old):Piece(old) {}
-
 Piece* Bishop::CreateCopy()
 {
     return new Bishop(*this);

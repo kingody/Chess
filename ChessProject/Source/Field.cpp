@@ -36,6 +36,8 @@ Field::Field()
     CanEnPassant = false;
     Kings[0] = (King*) Pieces[0][4];
     Kings[1] = (King*) Pieces[7][4];
+
+    Pieces[1][0] = new Pawn(1, 0, WHITE);
 }
 
 Field::Field(fstream &file)
@@ -143,7 +145,7 @@ Piece* Field::Promote(Pawn* pawn)
         //Clears the buffer
         cin.ignore(INT_MAX, '\n');
         cout << endl;
-    } while (id != 'Q' && id != 'R' && id != 'B' && id != 'H');
+    } while (id != 'Q' && id != 'R' && id != 'B' && id != 'H' && id != 'q' && id != 'r' && id != 'b' && id != 'h');
 
     delete Pieces[row][column];
     cout << "Your pawn was promoted to a ";
@@ -151,25 +153,28 @@ Piece* Field::Promote(Pawn* pawn)
     switch (id)
     {
         case 'Q':
+        case 'q':
             promoted = new Queen(row, column, color);
             cout << "Queen." << endl;
             break;
-
+        
         case 'R':
+        case 'r':
             promoted = new Rook(row, column, color);
             cout << "Rook." << endl;
             break;
 
         case 'B':
+        case 'b':
             promoted = new Bishop(row, column, color);
             cout << "Bishop." << endl;
             break;
 
         case 'H':
+        case 'h':
             promoted = new Knight(row, column, color);
             cout << "Knight." << endl;
             break;
-
     }
     system("pause");
     return promoted;

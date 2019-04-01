@@ -7,7 +7,7 @@ Pawn::Pawn(char r, char c, Color color):Piece(r, c, color)
     id = 'P';
 }
 
-Pawn::Pawn(const Pawn &old):Piece(old) {}
+//Pawn::Pawn(const Pawn &old):Piece(old) {}
 
 Piece* Pawn::CreateCopy()
 {

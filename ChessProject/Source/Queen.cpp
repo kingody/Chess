@@ -7,8 +7,6 @@ Queen::Queen(char r, char c, Color color):Piece(r, c, color)
     id = 'Q';
 }
 
-Queen::Queen(const Queen &old):Piece(old) {}
-
 Piece* Queen::CreateCopy()
 {
     return new Queen(*this);
