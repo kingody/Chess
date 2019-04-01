@@ -166,6 +166,8 @@ void ChessGame::SaveGame(Color currentPlayer)
 
     SaveToFile(currentPlayer, file);
 
+    cout << "File saved at " + filename << endl;
+
     system("pause");
 }
 
@@ -185,7 +187,10 @@ void ChessGame::SaveGame(Color currentPlayer, string filename)
             cout << "Error while creating file." << endl;
 
         else
+        {
             SaveToFile(currentPlayer, file);
+            cout << "File saved at " + filename << endl;
+        }
     }
     else
         cout << "This file already exists." << endl;
@@ -219,7 +224,6 @@ void ChessGame::SaveToFile(Color currentPlayer,fstream &file)
     file << currentPlayer;
 
     file.close();
-    cout << "File saved" << endl;
 }
 
 bool ChessGame::Import(string filename, Color &turn)
