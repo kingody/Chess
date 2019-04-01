@@ -25,7 +25,7 @@ class Field
         bool OutOfBounds(char, char);
         bool PathBlocked(char, char, char, char);
 
-        bool CanMove(char, char, char, char);
+        bool CanMove(char, char, char, char, bool);
         bool TryMove(char, char, char, char);
         void ExecMove(char, char, char, char);
         bool Move(string, string , Color);

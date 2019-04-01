@@ -10,12 +10,59 @@ ChessGame::ChessGame()
     Board = NULL;
 }
 
+bool ChessGame::Command(Color &turn, string command)
+{
+    if (command == "HELP" || command == "help")
+    {   
+        ShowHelp();
+        return true;
+    }    
+    else if (command == "CASTLE" || command == "castle")
+    {
+        string direction;
+        cin >> direction;
+
+        if (direction == "RIGHT" || direction == "right" || direction == "LEFT" || direction == "left")
+            if (!Board->Castle(turn, direction))
+            {       
+                cout << "You can't do that." << endl;
+                return false;
+            }
+            else
+            {
+                turn = (Color) !turn;
+                return true;
+            }
+       
+        cout << "Invalid command." << endl;
+        system("pause");
+        return false;      
+    }
+    else if (command == "SAVE" || command == "save")
+    {
+        SaveGame();
+        return true;
+    }
+
+    string newpos;
+    cin >> newpos;
+
+    if (!Board->Move(command, newpos, turn))
+    {
+        system("pause");
+        return false;
+    }
+    
+    turn = (Color) !turn;
+    return true;
+}
+
 void ChessGame::PlayChess()
 {
     Board = new Field();
     
     Color turn = WHITE;
-    string oldpos = "something", newpos = "else";
+    string command;
     bool Check = false;
 
     while (true)
@@ -30,25 +77,9 @@ void ChessGame::PlayChess()
             cout << " It is " << Names[turn] << "'s turn." << endl << endl;
 
             cout << " -Enter your move: ";
-            cin >> oldpos;
-
-            if (oldpos == "HELP" || oldpos == "help")
-            {
-                ShowHelp();
-                continue;
-            }
-
-            cin >> newpos;
-
-            if ((oldpos == "CASTLE" || oldpos == "castle") && (newpos == "RIGHT" || newpos == "right" || newpos == "LEFT" || newpos == "left"))
-            {
-                if (Board->Castle(turn, newpos))
-                    break;
-            }
+            cin >> command;
         } 
-        while (!Board->Move(oldpos, newpos, turn));
-
-        turn = (Color) !turn;
+        while (!Command(turn, command));
 
         Check = Board->IsCheck(turn);
         if (Check && Board->IsCheckmate(turn))
@@ -75,6 +106,8 @@ void ChessGame::ShowHelp()
     cout << endl << "Special Commands:" << endl << "-----------------" << endl << endl;
 
     cout << " HELP: Shows this message." << endl << endl;
+
+    cout << " SAVE: Saves the current state of the game." << endl << endl;
 
     cout << " CASTLE RIGHT/LEFT: Swaps the King with the right/left Rook if the requirements are met" << endl << endl;
 

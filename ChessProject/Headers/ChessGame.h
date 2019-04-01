@@ -6,6 +6,8 @@ class ChessGame
     public:
         ChessGame();
 
+        bool Command(Color&, string);
+
         void PlayChess();
 
         void ShowHelp();

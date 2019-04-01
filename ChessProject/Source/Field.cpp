@@ -170,7 +170,7 @@ bool Field::IsCheck(Color color)
 
     for (char i = 0; i < 8; i++)
         for (char j = 0; j < 8; j++)
-            if (Pieces[i][j] && (Pieces[i][j]->GetColor() != color) && CanMove(i, j, row - i, column - j))
+            if (Pieces[i][j] && (Pieces[i][j]->GetColor() != color) && CanMove(i, j, row - i, column - j, true))
             {
                 cout << (int)i << (int)j << endl;
                 system("pause");
@@ -192,7 +192,7 @@ bool Field::IsCheckmate(Color color)
                     {
                         Field fieldcopy = *this;
 
-                        if (fieldcopy.CanMove(i, j, newrow - i, newcol - j))
+                        if (fieldcopy.CanMove(i, j, newrow - i, newcol - j, true))
                         {
                             fieldcopy.ExecMove(i, j, newrow, newcol);
 
@@ -228,10 +228,14 @@ bool Field::PathBlocked(char oldrow, char oldcol, char drow, char dcol)
     return false;
 }
 
-bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol)
+bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol, bool silentMode = false)
 {
     if (!Pieces[oldrow][oldcol] || !(Pieces[oldrow][oldcol]->IsValidMove(oldrow + drow, oldcol + dcol))) 
+    {
+        if (!silentMode)
+            cout << "Invalid move." << endl;
         return false;
+    }
 
     Color color = Pieces[oldrow][oldcol]->GetColor();
 
@@ -241,7 +245,11 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol)
 
     //Colision check
     if (PathBlocked(oldrow, oldcol, drow, dcol))
+    {
+        if (!silentMode)
+            cout << "Another piece is on the way." << endl;
         return false;
+    }
     
     if (!Pieces[oldrow + drow][oldcol + dcol])
     {   
@@ -251,7 +259,11 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol)
             bool IsEnPassant = CanEnPassant && (oldcol + dcol) == EnPassantColumn;
 
             if (!IsEnPassant)
+            {
+                if (!silentMode)
+                    cout << "You cannot capture a blank square." << endl;
                 return false;
+            }
         }
         return true;
     }
@@ -260,8 +272,18 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol)
         //Pawn block check
         bool IsForwardPawnMove = (Pieces[oldrow][oldcol]->GetId() == 'P') && !dcol;
         
-        return !IsForwardPawnMove;
+        if (IsForwardPawnMove)
+        {
+            if (!silentMode)
+                cout << "A pawn cannot capture a piece in front of itself." << endl;
+            return false;
+        }
+
+        return true;
     }
+
+    if (!silentMode)
+        cout << "This square is occupied by a piece of the same color." << endl;
     return false;
 }
 
@@ -306,14 +328,11 @@ void Field::ExecMove(char oldrow, char oldcol, char newrow, char newcol)
 }
 
 bool Field::Move(string oldpos, string newpos, Color CurrentPlayer)
- {
+ {  
     char oldrow = (int) oldpos[1] - '1';
-    char oldcol = (int) oldpos[0] - 'A';
+    char oldcol = (int) oldpos[0] - ((oldpos[0] >= 'A' && oldpos[0] <= 'Z') ? 'A' : 'a');
     char newrow = (int) newpos[1] - '1';
-    char newcol = (int) newpos[0] - 'A';
-
-    //cout << (int)oldrow << (int)oldcol << (int)newrow << (int)newcol;    //DEBUG
-    //system("pause");
+    char newcol = (int) newpos[0] - ((newpos[0] >= 'A' && newpos[0] <= 'Z') ? 'A' : 'a');
 
     if ( OutOfBounds(oldrow, oldcol) || OutOfBounds(newrow, newcol) || !Pieces[oldrow][oldcol] || Pieces[oldrow][oldcol]->GetColor() != CurrentPlayer )
         return false;
