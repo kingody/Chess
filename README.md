@@ -20,8 +20,12 @@ Executes the castling move if available.
 
 **SAVE:**
 
-Saves the current game at ChessProject\Saves\savefile*X*.txt.
+Saves the current game at ChessProject\Saves\savefile*X*.chs.
 
-**OPEN *filename*.txt:**
+**SAVEAS *filename*:**
 
-Imports the state of the game from *filename*.txt.
+Saves the current game at ChessProject\Saves\\*filename*.chs.
+
+**OPEN *filename*:**
+
+Imports the state of the game from *filename*.chs.
