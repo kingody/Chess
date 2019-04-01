@@ -1,4 +1,4 @@
-﻿#include "Bishop.h"
+﻿#include "Bishop.hpp"
 #include <cstdlib>
 
 Bishop::Bishop(char r, char c, Color color):Piece(r, c, color)

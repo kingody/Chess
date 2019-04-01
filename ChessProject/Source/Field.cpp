@@ -1,4 +1,4 @@
-﻿#include "Field.h"
+﻿#include "Field.hpp"
 #include <cstdlib>
 #include <string>
 
@@ -409,7 +409,7 @@ bool Field::Move(string oldpos, string newpos, Color CurrentPlayer)
 void Field::PrintField()
 {
     string id = "  ";
-    system("cls");
+    //system("cls");
 
     cout << endl << "     A   B   C   D   E   F   G   H \n";
 

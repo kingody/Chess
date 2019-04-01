@@ -1,4 +1,4 @@
-﻿#include "Pawn.h"
+﻿#include "Pawn.hpp"
 #include <cstdlib>
 
 Pawn::Pawn(char r, char c, Color color):Piece(r, c, color)

@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "Chess.h"
+#include "Chess.hpp"
 #include <fstream>
 
 using namespace std;

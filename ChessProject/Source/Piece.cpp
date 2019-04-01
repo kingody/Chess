@@ -1,4 +1,4 @@
-﻿#include "Piece.h"
+﻿#include "Piece.hpp"
 
 
 Piece::Piece(char r, char c, Color color)

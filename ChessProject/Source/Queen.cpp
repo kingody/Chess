@@ -1,4 +1,4 @@
-﻿#include "Queen.h"
+﻿#include "Queen.hpp"
 #include <cstdlib>
 
 Queen::Queen(char r, char c, Color color):Piece(r, c, color)

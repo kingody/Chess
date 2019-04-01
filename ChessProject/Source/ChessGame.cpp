@@ -1,6 +1,5 @@
-﻿#include "ChessGame.h"
+﻿#include "ChessGame.hpp"
 #include <string>
-
 
 ChessGame::ChessGame()
 {
@@ -89,7 +88,7 @@ void ChessGame::PlayChess()
     {
         do
         {
-            Board->PrintField();
+            PrintBoard();
 
             if (isCheck)
                 cout << "Check!" << endl;
@@ -106,11 +105,22 @@ void ChessGame::PlayChess()
             break;
     }
 
-    Board->PrintField();
+    PrintBoard();
     cout << "Checkmate! " << Names[!turn] << " wins!" << endl;
     system("pause");
 
     delete Board;
+}
+
+void ChessGame::PrintBoard()
+{
+    system("cls");
+    
+    cout << "\t\t " << Names[0] << endl;
+    
+    Board->PrintField();
+
+    cout << "\t\t " << Names[1] << endl << endl;
 }
 
 void ChessGame::ShowHelp()
@@ -187,6 +197,8 @@ void ChessGame::SaveToFile(Color currentPlayer,fstream &file)
 {
     char id;
 
+    file << Names[0] << endl << Names[1] << endl;
+
     for (char i = 0; i < 8; i++)
     {
         for (char j = 0; j < 8; j++)
@@ -222,6 +234,8 @@ bool ChessGame::Import(string filename, Color &turn)
     if (file.is_open())
     {
         delete Board;
+
+        file >> Names[0] >> Names[1];
         Board = new Field(file);
         file >> color;
         turn = (Color) color;

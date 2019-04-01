@@ -1,4 +1,4 @@
-﻿#include "Knight.h"
+﻿#include "Knight.hpp"
 #include <cstdlib>
 
 Knight::Knight(char r, char c, Color color):Piece(r, c, color)

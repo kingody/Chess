@@ -1,13 +1,11 @@
 ﻿#pragma once
-#include "Piece.h"
+#include "Piece.hpp"
 
-
-class Queen : public Piece
+class Bishop : public Piece
 {
     public:
-        Queen(char, char, Color);
+        Bishop(char, char, Color);
 
         Piece* CreateCopy();
         bool IsValidMove(char, char);
 };
-

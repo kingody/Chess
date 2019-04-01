@@ -47,37 +47,37 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\Bishop.h">
+    <ClInclude Include="Headers\Chess.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Chess.h">
+    <ClInclude Include="Headers\Bishop.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\ChessGame.h">
+    <ClInclude Include="Headers\ChessGame.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Field.h">
+    <ClInclude Include="Headers\Field.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\King.h">
+    <ClInclude Include="Headers\King.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Knight.h">
+    <ClInclude Include="Headers\Knight.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Pawn.h">
+    <ClInclude Include="Headers\Pawn.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Piece.h">
+    <ClInclude Include="Headers\Piece.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Queen.h">
+    <ClInclude Include="Headers\Queen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Rook.h">
+    <ClInclude Include="Headers\Rook.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Troops.h">
+    <ClInclude Include="Headers\Troops.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

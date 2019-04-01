@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Field.h"
+#include "Field.hpp"
 
 class ChessGame
 {
@@ -9,6 +9,8 @@ class ChessGame
         bool Command(Color&, string);
 
         void PlayChess();
+
+        void PrintBoard();
 
         void ShowHelp();
 

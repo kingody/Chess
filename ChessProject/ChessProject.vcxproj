@@ -150,17 +150,17 @@
     <ClCompile Include="Source\Rook.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\Bishop.h" />
-    <ClInclude Include="Headers\Chess.h" />
-    <ClInclude Include="Headers\ChessGame.h" />
-    <ClInclude Include="Headers\Field.h" />
-    <ClInclude Include="Headers\King.h" />
-    <ClInclude Include="Headers\Knight.h" />
-    <ClInclude Include="Headers\Pawn.h" />
-    <ClInclude Include="Headers\Piece.h" />
-    <ClInclude Include="Headers\Queen.h" />
-    <ClInclude Include="Headers\Rook.h" />
-    <ClInclude Include="Headers\Troops.h" />
+    <ClInclude Include="Headers\Bishop.hpp" />
+    <ClInclude Include="Headers\Chess.hpp" />
+    <ClInclude Include="Headers\ChessGame.hpp" />
+    <ClInclude Include="Headers\Field.hpp" />
+    <ClInclude Include="Headers\King.hpp" />
+    <ClInclude Include="Headers\Knight.hpp" />
+    <ClInclude Include="Headers\Pawn.hpp" />
+    <ClInclude Include="Headers\Piece.hpp" />
+    <ClInclude Include="Headers\Queen.hpp" />
+    <ClInclude Include="Headers\Rook.hpp" />
+    <ClInclude Include="Headers\Troops.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,4 @@
-﻿#include "King.h"
+﻿#include "King.hpp"
 #include <cstdlib>
 
 King::King(char r, char c, Color color):Piece(r, c, color)

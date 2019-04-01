@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Troops.h"
+#include "Troops.hpp"
 #include <iostream>
 #include <fstream>
 

@@ -1,4 +1,4 @@
-﻿#include "Rook.h"
+﻿#include "Rook.hpp"
 
 Rook::Rook(char r, char c, Color color):Piece(r, c, color)
 {
