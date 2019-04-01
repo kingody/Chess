@@ -15,8 +15,6 @@ Field::Field()
     {
         Pieces[1][i] = new Pawn(1, i, BLACK);
         Pieces[6][i] = new Pawn(6, i, WHITE);
-
-        //Pieces[4][i] = new Pawn(4, i, BLACK); //DEBUG
     }
     //Rest of the pieces
     for (char i = 0; i < 8; i += 7 )
@@ -35,11 +33,39 @@ Field::Field()
         Pieces[i][3] = new Queen(i, 3, color);
         Pieces[i][4] = new King(i, 4, color);
     }
+    CanEnPassant = false;
     Kings[0] = (King*) Pieces[0][4];
     Kings[1] = (King*) Pieces[7][4];
-    CanEnPassant = false;
+}
 
-    //Pieces[1][2] = new Pawn(1, 2, WHITE); //DEBUG
+Field::Field(fstream &file)
+{
+    char piece;
+    Color color;
+
+    for (char i = 0; i < 8; i++)
+    {
+        for (char j = 0; j < 8; j++)
+        {
+            file >> piece;
+
+            if (piece >= 'a' && piece <= 'z')
+            {
+                color = WHITE;
+                piece -= 32;
+            }
+            else
+                color = BLACK;
+            
+            Pieces[i][j] = CreatePiece(piece, i, j, color);
+
+            if (piece == 'K')
+            {
+                Kings[color] = (King*) Pieces[i][j];
+            }
+        }
+    }
+
 }
 
 Field::Field(const Field &old)
@@ -72,9 +98,36 @@ Piece** Field::operator[](char pos)
     return Pieces[pos];
 }
 
+Piece * Field::CreatePiece(char id, char row, char column, Color color)
+{
+    switch (id)
+    {
+        case 'P':
+            return new Pawn(row, column, color);
+
+        case 'Q':
+            return new Queen(row, column, color);
+
+        case 'R':
+            return new Rook(row, column, color);
+
+        case 'B':
+            return new Bishop(row, column, color);
+
+        case 'H':
+            return new Knight(row, column, color);
+        
+        case 'K':
+            return new King(row, column, color);
+
+        default:
+            return nullptr;
+    }
+}
+
 Piece* Field::Promote(Pawn* pawn)
 {
-    Piece *promoted = NULL;
+    Piece *promoted = nullptr;
     char row, column, id;
     Color color = pawn->GetColor();
 
@@ -141,13 +194,13 @@ bool Field::CanCastle(Color color, char RookColumn)
 bool Field::Castle(Color color, std::string direction)
 {
     char row = color ? 7 : 0;
-    char RookColumn = (direction == "RIGHT" || direction == "right") ? 7 : 0;
+    char rookColumn = (direction == "RIGHT" || direction == "right") ? 7 : 0;
 
-    if (!CanCastle(color, RookColumn))
+    if (!CanCastle(color, rookColumn))
         return false;
 
-    char dcol = RookColumn - 4;
-    char orientation = RookColumn ? 1 : -1;
+    char dcol = rookColumn - 4;
+    char orientation = rookColumn ? 1 : -1;
 
     for (char i = orientation; i != dcol; i += orientation)
     {
@@ -157,7 +210,7 @@ bool Field::Castle(Color color, std::string direction)
     //King moves 2 squares towards the Rook
     ExecMove(row, 4, row, 4 + 2 * orientation);
     //Rook moves to one square before the King's original position
-    ExecMove(row, RookColumn, row, 4 + orientation);
+    ExecMove(row, rookColumn, row, 4 + orientation);
 
     return true;
 }
@@ -171,11 +224,7 @@ bool Field::IsCheck(Color color)
     for (char i = 0; i < 8; i++)
         for (char j = 0; j < 8; j++)
             if (Pieces[i][j] && (Pieces[i][j]->GetColor() != color) && CanMove(i, j, row - i, column - j, true))
-            {
-                cout << (int)i << (int)j << endl;
-                system("pause");
                 return true;
-            }
 
     return false;
 }
@@ -190,13 +239,13 @@ bool Field::IsCheckmate(Color color)
                 for (char newrow = 0; newrow < 8; newrow++)
                     for (char newcol = 0; newcol < 8; newcol++)
                     {
-                        Field fieldcopy = *this;
+                        Field fieldCopy = *this;
 
-                        if (fieldcopy.CanMove(i, j, newrow - i, newcol - j, true))
+                        if (fieldCopy.CanMove(i, j, newrow - i, newcol - j, true))
                         {
-                            fieldcopy.ExecMove(i, j, newrow, newcol);
+                            fieldCopy.ExecMove(i, j, newrow, newcol);
 
-                            if (!fieldcopy.IsCheck(color))
+                            if (!fieldCopy.IsCheck(color))
                                 return false;
                         }
                     }
@@ -212,15 +261,15 @@ bool Field::OutOfBounds(char row, char column)
 
 bool Field::PathBlocked(char oldrow, char oldcol, char drow, char dcol)
 {
-    char RowDirection = (drow < 0) ? -1 : 1;
-    char ColumnDirection = (dcol < 0) ? -1 : 1;
+    char rowDirection = (drow < 0) ? -1 : 1;
+    char columnDirection = (dcol < 0) ? -1 : 1;
     
     for (char row = 0, column = 0; (abs(row) < abs(drow) - 1) || (abs(column) < abs(dcol) - 1);)
     {
         if (abs(row) < abs(drow))
-            row += RowDirection;
+            row += rowDirection;
         if (abs(column) < abs(dcol))
-            column += ColumnDirection;
+            column += columnDirection;
 
         if (Pieces[oldrow + row][oldcol + column])
             return true;
@@ -278,7 +327,6 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol, bool silentM
                 cout << "A pawn cannot capture a piece in front of itself." << endl;
             return false;
         }
-
         return true;
     }
 
@@ -312,14 +360,14 @@ void Field::ExecMove(char oldrow, char oldcol, char newrow, char newcol)
             //This is the only case in which a piece is destroyed without another piece landing on top of it
             char direction = Pieces[oldrow][oldcol]->GetColor() ? 1 : -1;
             delete Pieces[newrow + direction][newcol];
-            Pieces[newrow + direction][newcol] = NULL;
+            Pieces[newrow + direction][newcol] = nullptr;
         }
     }
 
     Pieces[oldrow][oldcol]->Move(newrow, newcol);
     delete Pieces[newrow][newcol];
     Pieces[newrow][newcol] = Pieces[oldrow][oldcol];
-    Pieces[oldrow][oldcol] = NULL;
+    Pieces[oldrow][oldcol] = nullptr;
 
     CanEnPassant = Pieces[newrow][newcol]->GetId() == 'P' && abs(newrow - oldrow) == 2;
 
@@ -335,7 +383,10 @@ bool Field::Move(string oldpos, string newpos, Color CurrentPlayer)
     char newcol = (int) newpos[0] - ((newpos[0] >= 'A' && newpos[0] <= 'Z') ? 'A' : 'a');
 
     if ( OutOfBounds(oldrow, oldcol) || OutOfBounds(newrow, newcol) || !Pieces[oldrow][oldcol] || Pieces[oldrow][oldcol]->GetColor() != CurrentPlayer )
+    {
+        cout << "Invalid move." << endl;
         return false;
+    }
 
     if ( CanMove(oldrow, oldcol, newrow - oldrow, newcol - oldcol) && TryMove(oldrow, oldcol, newrow, newcol) )
     {
@@ -346,6 +397,7 @@ bool Field::Move(string oldpos, string newpos, Color CurrentPlayer)
 
         return true;
     }
+    cout << "Invalid move. Your King is/will be under attack." << endl;
     return false;
 }
 

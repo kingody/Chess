@@ -1,6 +1,6 @@
 ﻿#include "ChessGame.h"
 #include <string>
-#include <fstream>
+
 
 ChessGame::ChessGame()
 {
@@ -40,7 +40,18 @@ bool ChessGame::Command(Color &turn, string command)
     }
     else if (command == "SAVE" || command == "save")
     {
-        SaveGame();
+        SaveGame(turn);
+        return true;
+    }
+    else if (command == "IMPORT" || command == "import")
+    {
+        string filename;
+        cin >> filename;
+        if (!Import(filename, turn))
+        {
+            system("pause");
+            return false;
+        }
         return true;
     }
 
@@ -63,7 +74,7 @@ void ChessGame::PlayChess()
     
     Color turn = WHITE;
     string command;
-    bool Check = false;
+    bool isCheck = false;
 
     while (true)
     {
@@ -71,7 +82,7 @@ void ChessGame::PlayChess()
         {
             Board->PrintField();
 
-            if (Check)
+            if (isCheck)
                 cout << "Check!" << endl;
 
             cout << " It is " << Names[turn] << "'s turn." << endl << endl;
@@ -81,8 +92,8 @@ void ChessGame::PlayChess()
         } 
         while (!Command(turn, command));
 
-        Check = Board->IsCheck(turn);
-        if (Check && Board->IsCheckmate(turn))
+        isCheck = Board->IsCheck(turn);
+        if (isCheck && Board->IsCheckmate(turn))
             break;
     }
 
@@ -116,11 +127,11 @@ void ChessGame::ShowHelp()
     system("pause");
 }
 
-void ChessGame::SaveGame()
+void ChessGame::SaveGame(Color CurrentPlayer)
 {
     fstream file;
     string filename;
-    char index = 0;
+    char id, index = 0;
     
     do
     {
@@ -139,15 +150,42 @@ void ChessGame::SaveGame()
         for (char j = 0; j < 8; j++)
         {
             if ((*Board)[i][j])
-                file << (*Board)[i][j]->GetId() << (*Board)[i][j]->GetColor();
-            
+            {
+                if ((*Board)[i][j]->GetColor())
+                    id = (*Board)[i][j]->GetId() + 32;
+                else
+                    id = (*Board)[i][j]->GetId();
+                file << id;
+            }   
             else
-                file << "--";
+                file << '-';
         }
         file << endl;
     }
-
+    file << CurrentPlayer;
+    
     file.close();
-    cout << "File saved";
+    cout << "File saved" << endl;
     system("pause");
+}
+
+bool ChessGame::Import(string filename, Color &turn)
+{
+    fstream file;
+    int color;
+
+    filename = "Saves/" + filename;
+
+    file.open(filename, ios::in);
+
+    if (file.is_open())
+    {
+        delete Board;
+        Board = new Field(file);
+        file >> color;
+        turn = (Color) color;
+        return true;
+    }
+    cout << "File not found." << endl;
+    return false;
 }

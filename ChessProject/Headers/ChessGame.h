@@ -12,7 +12,9 @@ class ChessGame
 
         void ShowHelp();
 
-        void SaveGame();
+        void SaveGame(Color);
+
+        bool Import(string, Color&);
 
     private:
         std::string Names[2];

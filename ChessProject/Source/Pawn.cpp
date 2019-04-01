@@ -19,10 +19,10 @@ bool Pawn::IsValidMove(char newrow, char newcol)
     char direction = color ? -1 : 1;  //upwards or downwards motion depends on color
     char drow = newrow - row, dcol = newcol - column;
 
-    bool IsSingleStep = !dcol && (drow == direction);
-    bool IsDoubleStep = (row == (color ? 6 : 1)) && (drow == 2 * direction);
+    bool isSingleStep = !dcol && (drow == direction);
+    bool isDoubleStep = (row == (color ? 6 : 1)) && (drow == 2 * direction);
 
-    return IsSingleStep || IsCapture(drow, dcol) || IsDoubleStep;
+    return isSingleStep || IsCapture(drow, dcol) || isDoubleStep;
 }
 
 bool Pawn::IsCapture(char drow, char dcol)

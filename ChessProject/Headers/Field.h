@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Troops.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -8,12 +9,14 @@ class Field
 {
     public:
         Field();
+        Field(fstream&);
         Field(const Field&);
 
         ~Field();
 
         Piece** operator[] (char);
 
+        Piece* CreatePiece(char, char, char, Color);
         Piece* Promote(Pawn*);
         bool EnPassantStatus() const;
         bool CanCastle(Color, char);
