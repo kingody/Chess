@@ -184,6 +184,7 @@ bool ChessGame::Import(string filename, Color &turn)
         Board = new Field(file);
         file >> color;
         turn = (Color) color;
+        file.close();
         return true;
     }
     cout << "File not found." << endl;
