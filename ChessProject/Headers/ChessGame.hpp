@@ -6,13 +6,15 @@ class ChessGame
     public:
         ChessGame();
 
+        void ShowMenu();
+
         bool Command(Color&, string);
 
         void PlayChess();
 
         void PrintField();
 
-        void ShowHelp();
+        void PrintFromFile(string);
 
         void SaveGame(Color);
         void SaveGame(Color, string);

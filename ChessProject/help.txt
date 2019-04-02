@@ -11,10 +11,13 @@ Special Commands:
 
  HELP: Shows this message.
 
- SAVE: Saves the current state of the game.
-
  CASTLE RIGHT/LEFT: Swaps the King with the right/left Rook if the requirements are met
 
 	-Requirements: Both pieces have never moved before, the squares between them are empty,
 	 and the King is not in check for every square till his final destination
 
+ SAVE: Saves the current state of the game at savefileX.chs.
+
+ SAVEAS filename: Saves the current state of the game at filename.chs.
+
+ OPEN filename: Imports the state of the game from *filename*.chs.

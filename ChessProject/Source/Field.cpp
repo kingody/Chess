@@ -34,16 +34,18 @@ Field::Field()
         Pieces[i][4] = new King(i, 4, color);
     }
     CanEnPassant = false;
+	EnPassantColumn = 8;
     Kings[0] = (King*) Pieces[0][4];
     Kings[1] = (King*) Pieces[7][4];
-
-    Pieces[1][0] = new Pawn(1, 0, WHITE);
 }
 
 Field::Field(fstream &file)
 {
-    char piece;
+    char piece, movedStatus;
     Color color;
+
+    file >> CanEnPassant;
+    file >> EnPassantColumn;
 
     for (char i = 0; i < 8; i++)
     {
@@ -68,6 +70,17 @@ Field::Field(fstream &file)
         }
     }
 
+    for (char i = 0; i < 2; i++)
+    {
+        for (char j = 0; j < 8; j += 7)
+        {
+            file >> movedStatus;
+            ((Rook*)Pieces[7 * i][j])->HasMoved = movedStatus;
+
+        }
+        file >> movedStatus;
+        Kings[i]->HasMoved = movedStatus;
+    }
 }
 
 Field::Field(const Field &old)
@@ -86,6 +99,8 @@ Field::Field(const Field &old)
                 Pieces[i][j] = NULL;
         }
     CanEnPassant = old.EnPassantStatus();
+	EnPassantColumn = old.GetEnPassantColumn();
+
 }
 
 Field::~Field()
@@ -185,21 +200,24 @@ bool Field::EnPassantStatus() const
     return CanEnPassant;
 }
 
-bool Field::CanCastle(Color color, char RookColumn)
+char Field::GetEnPassantColumn() const
+{
+	return EnPassantColumn;
+}
+
+bool Field::CanCastle(Color color, char rookColumn)
 {
     char row = color ? 7 : 0;
     
-    if (Kings[color]->HasMoved || !Pieces[row][RookColumn] || Pieces[row][RookColumn]->GetId() != 'R' || ((Rook*)Pieces[row][RookColumn])->HasMoved)
-    {
+    if (!Pieces[row][rookColumn] || Pieces[row][rookColumn]->GetId() != 'R' || ((Rook*)Pieces[row][rookColumn])->HasMoved)
         return false;
-    }
+
     return true;
 }
 
-bool Field::Castle(Color color, std::string direction)
+bool Field::Castle(Color color, char rookColumn)
 {
     char row = color ? 7 : 0;
-    char rookColumn = (direction == "RIGHT" || direction == "right") ? 7 : 0;
 
     if (!CanCastle(color, rookColumn))
         return false;
@@ -214,6 +232,7 @@ bool Field::Castle(Color color, std::string direction)
     }
     //King moves 2 squares towards the Rook
     ExecMove(row, 4, row, 4 + 2 * orientation);
+
     //Rook moves to one square before the King's original position
     ExecMove(row, rookColumn, row, 4 + orientation);
 
@@ -292,6 +311,7 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol, bool silentM
     }
 
     Color color = Pieces[oldrow][oldcol]->GetColor();
+    char rookColumn = dcol > 0 ? 7 : 0;
 
     //Knight check
     if ((Pieces[oldrow][oldcol]->GetId() == 'H') && ( !Pieces[oldrow + drow][oldcol + dcol] || (Pieces[oldrow + drow][oldcol + dcol]->GetColor() != color) ))
@@ -354,8 +374,8 @@ bool Field::TryMove(char oldrow, char oldcol, char newrow, char newcol)
 }
 
 void Field::ExecMove(char oldrow, char oldcol, char newrow, char newcol)
-{
-    //En Passant only
+{	
+	//En Passant only
     if (CanEnPassant && (Pieces[oldrow][oldcol]->GetId() == 'P') && (abs(newcol - oldcol) == 1) && (newcol == EnPassantColumn))
     {
         char EnPassantRow = Pieces[oldrow][oldcol]->GetColor() ? 3 : 4;
@@ -374,7 +394,7 @@ void Field::ExecMove(char oldrow, char oldcol, char newrow, char newcol)
     Pieces[newrow][newcol] = Pieces[oldrow][oldcol];
     Pieces[oldrow][oldcol] = nullptr;
 
-    CanEnPassant = Pieces[newrow][newcol]->GetId() == 'P' && abs(newrow - oldrow) == 2;
+	CanEnPassant = Pieces[newrow][newcol]->GetId() == 'P' && abs(newrow - oldrow) == 2;
 
     if (CanEnPassant)
         EnPassantColumn = newcol;
@@ -402,7 +422,6 @@ bool Field::Move(string oldpos, string newpos, Color CurrentPlayer)
 
         return true;
     }
-    cout << "Invalid move. Your King is/will be under attack." << endl;
     return false;
 }
 

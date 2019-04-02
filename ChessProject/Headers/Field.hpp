@@ -19,8 +19,9 @@ class Field
         Piece* CreatePiece(char, char, char, Color);
         Piece* Promote(Pawn*);
         bool EnPassantStatus() const;
+		char GetEnPassantColumn() const;
         bool CanCastle(Color, char);
-        bool Castle(Color, string);
+        bool Castle(Color, char);
 
         bool IsCheck(Color);
         bool IsCheckmate(Color);
@@ -40,5 +41,5 @@ class Field
         King* Kings[2];
 
         bool CanEnPassant;
-        char EnPassantColumn;
+        int EnPassantColumn;
 };

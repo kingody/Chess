@@ -81,4 +81,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="help.txt" />
+    <Text Include="menu.txt" />
+  </ItemGroup>
 </Project>

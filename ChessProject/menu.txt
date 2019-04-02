@@ -1,0 +1,14 @@
+Welcome to Chess!
+
+Menu:
+-----
+
+ 1. Play Chess
+
+ 2. Open existing game
+
+ 3. Change nicknames
+
+ 4. Quit
+
+

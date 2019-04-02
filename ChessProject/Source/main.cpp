@@ -8,6 +8,8 @@ int main()
 {
     ChessGame Chess;
 
+    //Chess.ShowMenu();
+
     Chess.PlayChess();
 
     system("pause");

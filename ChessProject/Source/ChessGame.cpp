@@ -9,11 +9,25 @@ ChessGame::ChessGame()
     Board = NULL;
 }
 
+void ChessGame::ShowMenu()
+{
+    char choice;
+    
+    system("cls");
+
+    PrintFromFile("menu.txt");
+
+    cout << "Select your choice: ";
+    cin >> choice;
+}
+
 bool ChessGame::Command(Color &turn, string command)
 {
     if (command == "HELP" || command == "help")
     {   
-        ShowHelp();
+        system("cls");
+        PrintFromFile("help.txt");
+        system("pause");
         return true;
     }    
     else if (command == "CASTLE" || command == "castle")
@@ -22,7 +36,10 @@ bool ChessGame::Command(Color &turn, string command)
         cin >> direction;
 
         if (direction == "RIGHT" || direction == "right" || direction == "LEFT" || direction == "left")
-            if (!Board->Castle(turn, direction))
+        {
+            char rookColumn = (direction == "RIGHT" || direction == "right") ? 7 : 0;
+
+            if (!Board->Castle(turn, rookColumn))
             {       
                 cout << "You can't do that." << endl;
                 system("pause");
@@ -33,6 +50,7 @@ bool ChessGame::Command(Color &turn, string command)
                 turn = (Color) !turn;
                 return true;
             }
+        }
        
         cout << "Invalid command." << endl;
         system("pause");
@@ -123,13 +141,11 @@ void ChessGame::PrintField()
     cout << "\t\t " << Names[1] << endl << endl;
 }
 
-void ChessGame::ShowHelp()
+void ChessGame::PrintFromFile(string filename)
 {
-    system("cls");
-
     fstream file;
 
-    file.open("help.txt", ios::in);
+    file.open(filename, ios::in);
 
     if (file.is_open())
     {
@@ -141,9 +157,7 @@ void ChessGame::ShowHelp()
         }
     }
     else
-        cout << "Cannot find help.txt" << endl;
-
-    system("pause");
+        cout << "Cannot find " + filename << endl;
 }
 
 void ChessGame::SaveGame(Color currentPlayer)
@@ -203,6 +217,7 @@ void ChessGame::SaveToFile(Color currentPlayer,fstream &file)
     char id;
 
     file << Names[0] << endl << Names[1] << endl;
+	file << (int) Board->EnPassantStatus() << ' ' << (int) Board->GetEnPassantColumn() << endl;
 
     for (char i = 0; i < 8; i++)
     {
@@ -212,8 +227,10 @@ void ChessGame::SaveToFile(Color currentPlayer,fstream &file)
             {
                 if ((*Board)[i][j]->GetColor())
                     id = (*Board)[i][j]->GetId() + 32;
+
                 else
                     id = (*Board)[i][j]->GetId();
+
                 file << id;
             }
             else
@@ -221,6 +238,27 @@ void ChessGame::SaveToFile(Color currentPlayer,fstream &file)
         }
         file << endl;
     }
+
+    for (char i = 0; i < 8; i += 7)
+    {
+        for (char j = 0; j < 8; j += 7)
+        {
+            if ((*Board)[i][j]->GetId() == 'R')
+                file << ((Rook*) (*Board)[i][j])->HasMoved << ' ';
+
+            else
+                file << '1 ';
+        }
+
+        if ((*Board)[i][4]->GetId() == 'K')
+            file << ((King*) (*Board)[i][4])->HasMoved << ' ';
+
+        else
+            file << '1 ';
+
+        file << endl;
+    }
+
     file << currentPlayer;
 
     file.close();

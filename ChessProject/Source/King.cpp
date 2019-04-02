@@ -22,9 +22,11 @@ bool King::IsValidMove(char newrow, char newcol)
 {
     char drow = abs(newrow - row), dcol = abs(newcol - column);
 
-    bool IsAdjacent = (drow || dcol) && (drow < 2) && (dcol < 2);
+    bool isAdjacent = (drow || dcol) && (drow < 2) && (dcol < 2);
 
-    return IsAdjacent;
+    //bool isCastle = (dcol == 2) && !HasMoved && (row = (color ? 7 : 0));
+
+    return isAdjacent;
 }
 
 void King::Move(char newrow, char newcol)
