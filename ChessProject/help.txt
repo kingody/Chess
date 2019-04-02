@@ -20,4 +20,4 @@ Special Commands:
 
  SAVEAS filename: Saves the current state of the game at filename.chs.
 
- OPEN filename: Imports the state of the game from *filename*.chs.
+ LOAD filename: Imports the state of the game from *filename*.chs.

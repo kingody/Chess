@@ -69,7 +69,7 @@ bool ChessGame::Command(Color &turn, string command)
         SaveGame(turn, filename);
         return true;
     }
-    else if (command == "OPEN" || command == "open")
+    else if (command == "LOAD" || command == "load")
     {
         string filename;
         cin >> filename;
