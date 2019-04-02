@@ -10,7 +10,7 @@ class ChessGame
 
         void PlayChess();
 
-        void PrintBoard();
+        void PrintField();
 
         void ShowHelp();
 

@@ -1,0 +1,20 @@
+
+Moving Pieces:
+--------------
+
+ To move, type the coordinates of the piece you want to move followed by the coordinates of your desired destination.
+
+	-Example: D7 D5
+
+Special Commands:
+-----------------
+
+ HELP: Shows this message.
+
+ SAVE: Saves the current state of the game.
+
+ CASTLE RIGHT/LEFT: Swaps the King with the right/left Rook if the requirements are met
+
+	-Requirements: Both pieces have never moved before, the squares between them are empty,
+	 and the King is not in check for every square till his final destination
+

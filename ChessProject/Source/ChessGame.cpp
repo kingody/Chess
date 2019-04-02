@@ -88,7 +88,7 @@ void ChessGame::PlayChess()
     {
         do
         {
-            PrintBoard();
+            PrintField();
 
             if (isCheck)
                 cout << "Check!" << endl;
@@ -105,14 +105,14 @@ void ChessGame::PlayChess()
             break;
     }
 
-    PrintBoard();
+    PrintField();
     cout << "Checkmate! " << Names[!turn] << " wins!" << endl;
     system("pause");
 
     delete Board;
 }
 
-void ChessGame::PrintBoard()
+void ChessGame::PrintField()
 {
     system("cls");
     
@@ -126,22 +126,22 @@ void ChessGame::PrintBoard()
 void ChessGame::ShowHelp()
 {
     system("cls");
-    
-    cout << endl << "Moving Pieces:" << endl << "--------------" << endl << endl;
 
-    cout << "To move, type the coordinates of the piece you want to move followed by the coordinates of your desired destination." << endl << endl;
+    fstream file;
 
-    cout << "\t-Example: D7 D5" << endl << endl;
+    file.open("help.txt", ios::in);
 
-    cout << endl << "Special Commands:" << endl << "-----------------" << endl << endl;
-
-    cout << " HELP: Shows this message." << endl << endl;
-
-    cout << " SAVE: Saves the current state of the game." << endl << endl;
-
-    cout << " CASTLE RIGHT/LEFT: Swaps the King with the right/left Rook if the requirements are met" << endl << endl;
-
-    cout << "\t-Requirements: Both pieces have never moved before, the squares between them are empty,\n\t and the King is not in check for every square till his final destination" << endl << endl;
+    if (file.is_open())
+    {
+        string line;
+        while (!file.eof())
+        {
+            getline(file, line);
+            cout << line << endl;
+        }
+    }
+    else
+        cout << "Cannot find help.txt" << endl;
 
     system("pause");
 }
