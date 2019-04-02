@@ -26,6 +26,6 @@ Saves the current game at ChessProject\Saves\savefile*X*.chs.
 
 Saves the current game at ChessProject\Saves\\*filename*.chs.
 
-**OPEN *filename*:**
+**LOAD *filename*:**
 
 Imports the state of the game from *filename*.chs.
