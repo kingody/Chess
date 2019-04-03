@@ -6,17 +6,13 @@ A console chess game written in C++ for learning purposes.
 
 To move, type the letter or the column followed by the number of the row for the starting position and the target position.
 
-- Example: ```D7 D5```
+- Example: ```D2 D4```
 
 ## Commands
 
 **HELP:**
 
 Opens a help message with all the available commands.
-
-**CASTLE RIGHT/LEFT:**
-
-Executes the castling move if available.
 
 **SAVE:**
 
