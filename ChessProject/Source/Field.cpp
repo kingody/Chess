@@ -208,6 +208,9 @@ char Field::GetEnPassantColumn() const
 bool Field::CanCastle(Color color, char rookColumn)
 {
     char row = color ? 7 : 0;
+
+    if (IsCheck(color))
+        return false;
     
     if (!Pieces[row][rookColumn] || Pieces[row][rookColumn]->GetId() != 'R' || ((Rook*)Pieces[row][rookColumn])->HasMoved)
         return false;
@@ -227,14 +230,19 @@ bool Field::Castle(Color color, char rookColumn)
 
     for (char i = orientation; i != dcol; i += orientation)
     {
+        //Empty square check
         if (Pieces[row][4 + i])
             return false;
+
+        //King threat check
+        if (!TryMove(row, 4, row, 4 + i))
+            return false;
     }
-    //King moves 2 squares towards the Rook
-    ExecMove(row, 4, row, 4 + 2 * orientation);
 
     //Rook moves to one square before the King's original position
     ExecMove(row, rookColumn, row, 4 + orientation);
+
+    //King movement is handled by Move()
 
     return true;
 }
@@ -311,7 +319,11 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol, bool silentM
     }
 
     Color color = Pieces[oldrow][oldcol]->GetColor();
+    
     char rookColumn = dcol > 0 ? 7 : 0;
+    //Castle check
+    if (Pieces[oldrow][oldcol]->GetId() == 'K' && Castle(color, rookColumn))
+        return true;
 
     //Knight check
     if ((Pieces[oldrow][oldcol]->GetId() == 'H') && ( !Pieces[oldrow + drow][oldcol + dcol] || (Pieces[oldrow + drow][oldcol + dcol]->GetColor() != color) ))
@@ -402,9 +414,9 @@ void Field::ExecMove(char oldrow, char oldcol, char newrow, char newcol)
 
 bool Field::Move(string oldpos, string newpos, Color CurrentPlayer)
  {  
-    char oldrow = (int) oldpos[1] - '1';
+    char oldrow = 7 - ((int) oldpos[1] - '1');
     char oldcol = (int) oldpos[0] - ((oldpos[0] >= 'A' && oldpos[0] <= 'Z') ? 'A' : 'a');
-    char newrow = (int) newpos[1] - '1';
+    char newrow = 7 - ((int) newpos[1] - '1');
     char newcol = (int) newpos[0] - ((newpos[0] >= 'A' && newpos[0] <= 'Z') ? 'A' : 'a');
 
     if ( OutOfBounds(oldrow, oldcol) || OutOfBounds(newrow, newcol) || !Pieces[oldrow][oldcol] || Pieces[oldrow][oldcol]->GetColor() != CurrentPlayer )
@@ -428,22 +440,21 @@ bool Field::Move(string oldpos, string newpos, Color CurrentPlayer)
 void Field::PrintField()
 {
     string id = "  ";
-    //system("cls");
 
     cout << endl << "     A   B   C   D   E   F   G   H \n";
 
     for (char i = 0; i < 8; i++)
     {
-        cout << "   +---+---+---+---+---+---+---+---+\n " << i + 1 << ' ';
+        cout << "   +---+---+---+---+---+---+---+---+\n " << 8 - i << ' ';
 
         for (char j = 0; j < 8; j++)
         {
-            id[0] = Pieces[i][j]? Pieces[i][j]->GetId() : ' ';
-            id[1] = (!Pieces[i][j] || Pieces[i][j]->GetColor())? ' ' : '`';
+            id[0] = Pieces[i][j] ? Pieces[i][j]->GetId() : ' ';
+            id[1] = (!Pieces[i][j] || Pieces[i][j]->GetColor()) ? ' ' : '`';
 
             cout << "| " << id;
         }
-        cout << "| " << i + 1 << endl;
+        cout << "| " << 8 - i << endl;
     }
 
     cout << "   +---+---+---+---+---+---+---+---+\n";

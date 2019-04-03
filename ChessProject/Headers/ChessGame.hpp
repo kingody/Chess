@@ -8,7 +8,7 @@ class ChessGame
 
         void ShowMenu();
 
-        bool Command(Color&, string);
+        bool Command(string);
 
         void PlayChess();
 
@@ -16,14 +16,17 @@ class ChessGame
 
         void PrintFromFile(string);
 
-        void SaveGame(Color);
-        void SaveGame(Color, string);
-        void SaveToFile(Color, fstream&);
+        void SaveGame();
+        void SaveGame(string);
+        void SaveToFile(fstream&);
 
-        bool Import(string, Color&);
+        bool Import(string);
+        bool Import2(string);
 
     private:
         std::string Names[2];
+
+        Color CurrentPlayer;
 
         Field* Board;
 };

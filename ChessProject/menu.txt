@@ -5,10 +5,9 @@ Menu:
 
  1. Play Chess
 
- 2. Open existing game
+ 2. Load existing game
 
  3. Change nicknames
 
  4. Quit
-
 
