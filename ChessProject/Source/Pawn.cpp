@@ -1,11 +1,7 @@
 ﻿#include "Pawn.hpp"
 #include <cstdlib>
 
-Pawn::Pawn(char r, char c, Color color):Piece(r, c, color)
-{
-    value = 1;
-    id = 'P';
-}
+Pawn::Pawn(char r, char c, Color color) : Piece(r, c, color, 1, 'P') {}
 
 //Pawn::Pawn(const Pawn &old):Piece(old) {}
 

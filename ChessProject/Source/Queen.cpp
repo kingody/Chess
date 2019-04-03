@@ -1,11 +1,7 @@
 ﻿#include "Queen.hpp"
 #include <cstdlib>
 
-Queen::Queen(char r, char c, Color color):Piece(r, c, color)
-{
-    value = 9;
-    id = 'Q';
-}
+Queen::Queen(char r, char c, Color color) : Piece(r, c, color, 9, 'Q') {}
 
 Piece* Queen::CreateCopy()
 {

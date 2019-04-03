@@ -5,7 +5,7 @@ enum Color {BLACK, WHITE};
 class Piece
 {
     public:
-        Piece(char , char , Color);
+        Piece(char , char , Color, char, char);
         Piece(const Piece&);
         virtual Piece* CreateCopy() = 0;
 

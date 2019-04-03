@@ -12,5 +12,5 @@ class King : public Piece
         bool IsValidMove(char, char);
         void Move(char, char);
 
-        bool HasMoved;  
+        bool HasMoved{ false };
 };

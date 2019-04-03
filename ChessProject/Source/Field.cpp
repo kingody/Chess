@@ -8,7 +8,7 @@ Field::Field()
     for (char i = 0; i < 8; i++)
     {
         for (char j = 0; j < 8; j++)
-            Pieces[i][j] = NULL;
+            Pieces[i][j] = nullptr;
     }
     //Pawns
     for (char i = 0; i < 8; i++)
@@ -34,7 +34,7 @@ Field::Field()
         Pieces[i][4] = new King(i, 4, color);
     }
     CanEnPassant = false;
-	EnPassantColumn = 8;
+    EnPassantColumn = 8;
     Kings[0] = (King*) Pieces[0][4];
     Kings[1] = (King*) Pieces[7][4];
 }
@@ -96,10 +96,12 @@ Field::Field(const Field &old)
                     Kings[Pieces[i][j]->GetColor()] = (King*)Pieces[i][j];
             }
             else
-                Pieces[i][j] = NULL;
+            {
+                Pieces[i][j] = nullptr;
+            }
         }
     CanEnPassant = old.EnPassantStatus();
-	EnPassantColumn = old.GetEnPassantColumn();
+    EnPassantColumn = old.GetEnPassantColumn();
 
 }
 
@@ -202,7 +204,7 @@ bool Field::EnPassantStatus() const
 
 char Field::GetEnPassantColumn() const
 {
-	return EnPassantColumn;
+    return EnPassantColumn;
 }
 
 bool Field::CanCastle(Color color, char rookColumn)
@@ -226,9 +228,9 @@ bool Field::Castle(Color color, char rookColumn)
         return false;
 
     char dcol = rookColumn - 4;
-    char orientation = rookColumn ? 1 : -1;
+    char direction = rookColumn ? 1 : -1;
 
-    for (char i = orientation; i != dcol; i += orientation)
+    for (char i = direction; i != dcol; i += direction)
     {
         //Empty square check
         if (Pieces[row][4 + i])
@@ -240,7 +242,7 @@ bool Field::Castle(Color color, char rookColumn)
     }
 
     //Rook moves to one square before the King's original position
-    ExecMove(row, rookColumn, row, 4 + orientation);
+    ExecMove(row, rookColumn, row, 4 + direction);
 
     //King movement is handled by Move()
 
@@ -315,14 +317,14 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol, bool silentM
     {
         if (!silentMode)
             cout << "Invalid move." << endl;
+
         return false;
     }
 
     Color color = Pieces[oldrow][oldcol]->GetColor();
     
-    char rookColumn = dcol > 0 ? 7 : 0;
     //Castle check
-    if (Pieces[oldrow][oldcol]->GetId() == 'K' && Castle(color, rookColumn))
+    if (Pieces[oldrow][oldcol]->GetId() == 'K' && abs(dcol) == 2 && Castle(color, (dcol > 0 ? 7 : 0)))
         return true;
 
     //Knight check
@@ -334,6 +336,7 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol, bool silentM
     {
         if (!silentMode)
             cout << "Another piece is on the way." << endl;
+
         return false;
     }
     
@@ -348,6 +351,7 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol, bool silentM
             {
                 if (!silentMode)
                     cout << "You cannot capture a blank square." << endl;
+
                 return false;
             }
         }
@@ -362,6 +366,7 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol, bool silentM
         {
             if (!silentMode)
                 cout << "A pawn cannot capture a piece in front of itself." << endl;
+
             return false;
         }
         return true;
@@ -369,6 +374,7 @@ bool Field::CanMove(char oldrow, char oldcol, char drow, char dcol, bool silentM
 
     if (!silentMode)
         cout << "This square is occupied by a piece of the same color." << endl;
+
     return false;
 }
 
@@ -379,15 +385,12 @@ bool Field::TryMove(char oldrow, char oldcol, char newrow, char newcol)
 
     FieldCopy.ExecMove(oldrow, oldcol, newrow, newcol);
 
-    if (FieldCopy.IsCheck(color))
-        return false;
-
-    return true;
+    return !FieldCopy.IsCheck(color);
 }
 
 void Field::ExecMove(char oldrow, char oldcol, char newrow, char newcol)
-{	
-	//En Passant only
+{       
+    //En Passant only
     if (CanEnPassant && (Pieces[oldrow][oldcol]->GetId() == 'P') && (abs(newcol - oldcol) == 1) && (newcol == EnPassantColumn))
     {
         char EnPassantRow = Pieces[oldrow][oldcol]->GetColor() ? 3 : 4;
@@ -406,7 +409,7 @@ void Field::ExecMove(char oldrow, char oldcol, char newrow, char newcol)
     Pieces[newrow][newcol] = Pieces[oldrow][oldcol];
     Pieces[oldrow][oldcol] = nullptr;
 
-	CanEnPassant = Pieces[newrow][newcol]->GetId() == 'P' && abs(newrow - oldrow) == 2;
+    CanEnPassant = Pieces[newrow][newcol]->GetId() == 'P' && abs(newrow - oldrow) == 2;
 
     if (CanEnPassant)
         EnPassantColumn = newcol;
@@ -430,7 +433,9 @@ bool Field::Move(string oldpos, string newpos, Color CurrentPlayer)
         ExecMove(oldrow, oldcol, newrow, newcol);
         //Promotion check
         if (newrow == (Pieces[newrow][newcol]->GetColor() ? 0 : 7))
+        {
             Pieces[newrow][newcol] = Promote((Pawn*)Pieces[newrow][newcol]);
+        }
 
         return true;
     }

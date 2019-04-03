@@ -1,11 +1,6 @@
 ﻿#include "Rook.hpp"
 
-Rook::Rook(char r, char c, Color color):Piece(r, c, color)
-{
-    value = 5;
-    id = 'R';
-    HasMoved = 0;
-}
+Rook::Rook(char r, char c, Color color) : Piece(r, c, color, 5, 'R') {}
 
 Rook::Rook(const Rook &old):Piece(old)
 {
@@ -21,9 +16,9 @@ bool Rook::IsValidMove(char newrow, char newcol)
 {
     char drow = newrow - row, dcol = newcol - column;
 
-    bool IsStraight = (!drow && dcol) || (drow && !dcol);
+    bool isStraight = (!drow && dcol) || (drow && !dcol);
 
-    return IsStraight;
+    return isStraight;
 }
 
 void Rook::Move(char newrow, char newcol)

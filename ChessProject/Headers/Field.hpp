@@ -19,7 +19,7 @@ class Field
         Piece* CreatePiece(char, char, char, Color);
         Piece* Promote(Pawn*);
         bool EnPassantStatus() const;
-		char GetEnPassantColumn() const;
+        char GetEnPassantColumn() const;
         bool CanCastle(Color, char);
         bool Castle(Color, char);
 

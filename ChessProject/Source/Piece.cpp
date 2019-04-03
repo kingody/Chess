@@ -1,12 +1,8 @@
 ﻿#include "Piece.hpp"
 
 
-Piece::Piece(char r, char c, Color color)
-{
-    row = r;
-    column = c;
-    this->color = color;
-}
+Piece::Piece(char r, char c, Color color, char value, char id)
+    :row(r), column(c), color(color), value(value), id(id) {}
 
 Piece::Piece(const Piece &old)
 {

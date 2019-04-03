@@ -1,11 +1,7 @@
 ﻿#include "Bishop.hpp"
 #include <cstdlib>
 
-Bishop::Bishop(char r, char c, Color color):Piece(r, c, color)
-{
-    value = 3;
-    id = 'B';
-}
+Bishop::Bishop(char r, char c, Color color) : Piece(r, c, color, 3, 'B') {}
 
 Piece* Bishop::CreateCopy()
 {
@@ -16,7 +12,7 @@ bool Bishop::IsValidMove(char newrow, char newcol)
 {
     char drow = abs(newrow - row), dcol = abs(newcol - column);
 
-    bool IsDiagonal = (drow == dcol) && drow;
+    bool isDiagonal = (drow == dcol) && drow;
 
-    return IsDiagonal;
+    return isDiagonal;
 }

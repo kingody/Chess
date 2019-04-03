@@ -1,12 +1,7 @@
 ﻿#include "King.hpp"
 #include <cstdlib>
 
-King::King(char r, char c, Color color):Piece(r, c, color)
-{
-    value = 99;
-    id = 'K';
-    HasMoved = 0;
-}
+King::King(char r, char c, Color color) : Piece(r, c, color, 100, 'K') {}
 
 King::King(const King &old):Piece(old)
 {

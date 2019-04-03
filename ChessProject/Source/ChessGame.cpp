@@ -7,7 +7,7 @@ ChessGame::ChessGame()
     Names[1] = "White";
 
     CurrentPlayer = WHITE;
-    Board = NULL;
+    Board = nullptr;
 }
 
 void ChessGame::ShowMenu()
@@ -48,7 +48,7 @@ bool ChessGame::Command(string command)
     {
         string filename;
         cin >> filename;
-        if (!Import2(filename))
+        if (!Import(filename))
         {
             system("pause");
             return false;
@@ -117,9 +117,7 @@ void ChessGame::PrintField()
 
 void ChessGame::PrintFromFile(string filename)
 {
-    fstream file;
-
-    file.open(filename, ios::in);
+    ifstream file(filename);
 
     if (file.is_open())
     {
@@ -194,7 +192,7 @@ void ChessGame::SaveToFile(fstream &file)
     char id;
 
     file << Names[0] << endl << Names[1] << endl;
-	file << (int) Board->EnPassantStatus() << ' ' << (int) Board->GetEnPassantColumn() << endl;
+    file << (int) Board->EnPassantStatus() << ' ' << (int) Board->GetEnPassantColumn() << endl;
 
     for (char i = 0; i < 8; i++)
     {
@@ -273,6 +271,7 @@ bool ChessGame::Import(string filename)
         file.close();
         return true;
     }
+
     cout << "File not found." << endl;
     return false;
 }

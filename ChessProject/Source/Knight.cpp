@@ -1,11 +1,7 @@
 ﻿#include "Knight.hpp"
 #include <cstdlib>
 
-Knight::Knight(char r, char c, Color color):Piece(r, c, color)
-{
-    value = 3;
-    id = 'H';
-}
+Knight::Knight(char r, char c, Color color) : Piece(r, c, color, 3, 'H') {}
 
 Piece* Knight::CreateCopy()
 {
